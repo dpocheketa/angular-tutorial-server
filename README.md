@@ -11,5 +11,5 @@ npm install
 npm start
 ```
 
-Open in your browser localhost:5000/
+Open in your browser [localhost:5000/](localhost:5000/)
 
