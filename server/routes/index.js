@@ -1,19 +1,25 @@
 'use strict';
 
 import express from 'express';
+import _ from 'lodash';
 import db from '../db/db.json';
+import category from './category';
 const router = express.Router();
 
 router.use('/', (req, res, next) => {
-  if (req.path === '/') {
+  if (_.isEqual(req.path,'/')) {
     res.render('index.html');
   } else {
     next();
   }
 });
 
-router.use('/db', (req, res) => {
+
+//@TODO remove later
+router.use('/api/db', (req, res) => {
   res.json(db);
 });
+
+router.use('/api/category', category);
 
 export default router;
