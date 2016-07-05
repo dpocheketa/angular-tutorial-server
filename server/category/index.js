@@ -6,13 +6,9 @@ import shortId from 'shortid';
 import fs from 'fs';
 
 let writeToFile = function(data, file = __dirname + '/../db/categories.json'){
-  fs.readFile(file, function(err, data){
-    console.log('data2: ', data.toString(), err);
+  fs.writeFile(file, JSON.stringify(data), function(err){
+    console.log('Category error: ', err);
   });
-    fs.writeFile(file, JSON.stringify(data), function(err){
-      console.log('file: ', file);
-      console.log(err);
-    });
 };
 
 class Category {
@@ -32,7 +28,7 @@ class Category {
     category.id = shortId.generate();
     this.categories.push(category);
     writeToFile(this.categories);
-console.log(this.categories);
+
     return category;
   }
 }

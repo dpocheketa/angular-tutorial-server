@@ -4,6 +4,7 @@ import express from 'express';
 import _ from 'lodash';
 import db from '../db/db.json';
 import category from './category';
+import product from './product';
 const router = express.Router();
 
 router.use('/', (req, res, next) => {
@@ -21,5 +22,7 @@ router.use('/api/db', (req, res) => {
 });
 
 router.use('/api/category', category);
+
+router.use('/api/product', product);
 
 export default router;
