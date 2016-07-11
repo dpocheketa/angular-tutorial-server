@@ -1,0 +1,3 @@
+[submodule "angular-tutorial"]
+	path = angular-tutorial
+	url = https://github.com/streetguy911/angular-tutorial
