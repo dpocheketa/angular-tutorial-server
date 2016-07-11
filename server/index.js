@@ -15,7 +15,7 @@ import routes from './routes/index';
 console.log(__dirname);
 
 const app = express();
-const frontendFolder = path.join(__dirname, '../../angular-tutorial');
+const frontendFolder = path.join(__dirname, '../angular-tutorial');
 
 app.set('views', path.join(frontendFolder));
 app.engine('html', ejs.renderFile);
