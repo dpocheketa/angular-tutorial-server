@@ -15,7 +15,6 @@ router.use('/', (req, res, next) => {
   }
 });
 
-
 //@TODO remove later
 router.use('/api/db', (req, res) => {
   res.json(db);

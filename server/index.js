@@ -7,6 +7,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import ejs from 'ejs';
+import cors from 'express-cors';
 
 
 import routes from './routes/index';
@@ -25,6 +26,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(frontendFolder));
+app.use(cors({
+  allowedOrigins: [
+    '*'
+  ]
+}));
 app.use('/', routes);
 
 const server = app.listen(process.env.PORT || 5000, () => {
