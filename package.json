@@ -22,7 +22,6 @@
     "babel-cli": "^6.10.1"
   },
   "devDependencies": {
-
     "shortid": "^2.2.6"
   },
   "engines": {
