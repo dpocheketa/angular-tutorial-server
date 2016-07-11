@@ -25,5 +25,9 @@
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "shortid": "^2.2.6"
+  },
+  "engines": {
+    "node": "0.12.6",
+    "npm": "3.8.1"
   }
 }
