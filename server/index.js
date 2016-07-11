@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(frontendFolder));
 app.use(cors({
   allowedOrigins: [
-    '*'
+    'localhost:*', 'github.com', '*.github.io'
   ]
 }));
 app.use('/', routes);
