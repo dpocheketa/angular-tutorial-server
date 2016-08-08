@@ -1,4 +1,5 @@
 require('babel-core/register')({
-  ignore: false
+  ignore: false,
+  plugins: ["transform-object-assign"]
 });
 require('./server/index.js');

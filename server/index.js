@@ -10,10 +10,12 @@ import ejs from 'ejs';
 import mongoose from './libs/mongoose';
 import models from './models';
 import passport from 'passport';
-import expressSession from 'express-session';
+import session from 'express-session';
 import routes from './routes/index';
 import throng from 'throng';
+import connectMongo from 'connect-mongo';
 
+const MongoStore = connectMongo(session);
 const WORKERS = process.env.WEB_CONCURRENCY || 1;
 const app = express();
 
@@ -36,10 +38,12 @@ function start(){
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(expressSession({
+  app.set('trust proxy', 1); // trust first proxy
+  app.use(session({
     secret: 'secret',
+    resave: false,
     saveUninitialized: true,
-    resave: true
+    store: new MongoStore({mongooseConnection: mongoose.connection})
   }));
   app.use(passport.initialize());
   app.use(passport.session());

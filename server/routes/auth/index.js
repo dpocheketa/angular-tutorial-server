@@ -37,6 +37,8 @@ router.post('/signin', passport.authenticate('local'), (req, res) => {
 });
 
 router.get('/secure', (req, res) => {
+  console.log(req.session);
+  console.log(req.user);
   if (req.user) {
     res.status(200).json({secure: true});
   } else {

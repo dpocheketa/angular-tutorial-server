@@ -14,6 +14,11 @@ const users = [{
   name: 'dpocheketa@gmail.com',
   email: 'dpocheketa@gmail.com',
   password: '123'
+},{
+  username: 'streetguy911@gmail.com',
+  name: 'streetguy911@gmail.com',
+  email: 'streetguy911@gmail.com',
+  password: '123'
 }];
 
 let createUsers = (callback)=> {
