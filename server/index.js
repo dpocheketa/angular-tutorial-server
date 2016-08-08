@@ -15,7 +15,8 @@ import throng from 'throng';
 
 const WORKERS = process.env.WEB_CONCURRENCY || 1;
 const app = express();
-
+console.log('MONGODB_URI: ', MONGODB_URI);
+console.log('MONGODB_URI2: ', process.env.MONGODB_URI);
 throng({
   workers: WORKERS,
   lifetime: Infinity,
