@@ -2,7 +2,6 @@
 
 import express from 'express';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 const User = mongoose.model('User');
