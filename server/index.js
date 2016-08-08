@@ -14,14 +14,16 @@ import routes from './routes/index';
 import throng from 'throng';
 
 const WORKERS = process.env.WEB_CONCURRENCY || 1;
+const app = express();
 
-throng(start, {
+throng({
   workers: WORKERS,
-  lifetime: Infinity
+  lifetime: Infinity,
+  start
 });
 
 function start(){
-  const app = express();
+
   const frontendFolder = path.join(__dirname, '../angular-tutorial');
   const frontendDevFolder = path.join(__dirname, '../../angular-tutorial');
 
