@@ -7,6 +7,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import ejs from 'ejs';
+import mongoose from './libs/mongoose';
 import models from './models';
 import passport from 'passport';
 import expressSession from 'express-session';
