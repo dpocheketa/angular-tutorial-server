@@ -19,12 +19,12 @@ const MongoStore = connectMongo(session);
 const WORKERS = process.env.WEB_CONCURRENCY || 1;
 const app = express();
 
-throng({
-  workers: WORKERS,
-  lifetime: Infinity,
-  start
-});
-
+// throng({
+//   workers: WORKERS,
+//   lifetime: Infinity,
+//   start
+// });
+start();
 function start(){
 
   const frontendFolder = path.join(__dirname, '../angular-tutorial');
