@@ -12,18 +12,11 @@ import models from './models';
 import passport from 'passport';
 import session from 'express-session';
 import routes from './routes/index';
-import throng from 'throng';
 import connectMongo from 'connect-mongo';
 
 const MongoStore = connectMongo(session);
-const WORKERS = process.env.WEB_CONCURRENCY || 1;
 const app = express();
 
-// throng({
-//   workers: WORKERS,
-//   lifetime: Infinity,
-//   start
-// });
 start();
 function start(){
 
