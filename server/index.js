@@ -16,7 +16,7 @@ import connectMongo from 'connect-mongo';
 
 const MongoStore = connectMongo(session);
 const app = express();
-
+let time = +new Date();
 start();
 function start(){
 
@@ -59,6 +59,7 @@ function start(){
     const {address, port} = server.address();
 
     console.log(`App listening at http://${address}:${port}`);
+    console.log(time - new Date());
   });
 }
 
