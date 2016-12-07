@@ -1,38 +1,50 @@
 'use strict';
+import mongoose from 'mongoose';
 
-import categories from '../db/categories.json';
-import _ from 'lodash';
-import shortId from 'shortid';
-import fs from 'fs';
-
-let writeToFile = function(data, file = __dirname + '/../db/categories.json'){
-  fs.writeFile(file, JSON.stringify(data), function(err){
-    console.log('Category error: ', err);
-  });
-};
-
+const MongoCategory = mongoose.model('Category');
 class Category {
   constructor(){
-    this.categories = _.clone(categories);
+
   }
 
-  getAll() {
-    return this.categories;
+  create(req, res){
+    let category = req.body;
+    console.log('req.body: ', req.body);
+    let instanse = new MongoCategory(category);
+
+    instanse.save((err, instanse)=>{
+      if(err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+      res.status(201).json(instanse);
+    });
   }
 
-  getById(id){
-    return _.find(this.categories, {id});
+  find(req, res, next){
+    return MongoCategory.findById(req.params.id, function(err, data){
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+
+      if (data){
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({message: 'Category not found'});
+      }
+    });
   }
 
-  create(category){
-    category.id = shortId.generate();
-    this.categories.push(category);
-    writeToFile(this.categories);
-
-    return category;
+  list(req, res, next){
+    return MongoCategory.find({}, (err, data) => {
+      if (err) {
+        next(err);
+      }
+      res.status(200).json(data);
+    });
   }
 }
 
-let category = new Category();
+export default new Category();
 
-export default category;

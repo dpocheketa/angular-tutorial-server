@@ -1,38 +1,50 @@
 'use strict';
+import mongoose from 'mongoose';
 
-import products from '../db/products.json';
-import _ from 'lodash';
-import shortId from 'shortid';
-import fs from 'fs';
-
-let writeToFile = function(data, file = __dirname + '/../db/products.json'){
-  fs.writeFile(file, JSON.stringify(data), function(err){
-    console.log('Product error', err);
-  });
-};
-
+const MongoProduct = mongoose.model('Product');
 class Product {
   constructor(){
-    this.products = _.clone(products);
+
   }
 
-  getAll() {
-    return this.products;
+  create(req, res){
+    let product = req.body;
+    console.log('req.body: ', req.body);
+    let instanse = new MongoProduct(product);
+
+    instanse.save((err, instanse)=>{
+      if(err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+      res.status(201).json(instanse);
+    });
   }
 
-  getById(id){
-    return _.find(this.products, {id});
+  find(req, res, next){
+    return MongoProduct.findById(req.params.id, function(err, data){
+      if (err) {
+        console.log(err);
+        next(err);
+      }
+
+      if (data){
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({message: 'Product not found'});
+      }
+    });
   }
 
-  create(category){
-    category.id = shortId.generate();
-    this.products.push(category);
-    writeToFile(this.products);
-
-    return category;
+  list(req, res, next){
+    return MongoProduct.find({}, (err, data) => {
+      if (err) {
+        next(err);
+      }
+      res.status(200).json(data);
+    });
   }
 }
 
-let product = new Product();
+export default new Product();
 
-export default product;
