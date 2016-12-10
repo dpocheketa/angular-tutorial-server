@@ -2,7 +2,14 @@
 import mongoose from 'mongoose';
 
 const MongoCategory = mongoose.model('Category');
+const MongoProduct = mongoose.model('Product');
+
+let findCategoryProducts = (categoryId)=>{
+    return MongoProduct.find({categoryId});
+};
+
 class Category {
+
   constructor(){
 
   }
@@ -62,18 +69,28 @@ class Category {
   remove(req, res){
     let categoryId = req.params.id;
 
-    return MongoCategory.findByIdAndRemove(categoryId, function(err, data){
-      if (err) {
-        return res.status(404).json(err);
-      }
+    findCategoryProducts(categoryId).then((data)=>{
 
-      if (data) {
-        res.status(202).send();
-      } else {
-        res.status(404).json({message: 'Category not found'});
-      }
+        if (data.length) {
+            res.status(400).json({message: 'Can`t remove category with products'});
+        } else {
+            MongoCategory.findByIdAndRemove(categoryId, function(err, data){
+              if (err) {
+                return res.status(404).json(err);
+              }
+
+              if (data) {
+                res.status(202).send();
+              } else {
+                res.status(404).json({message: 'Category not found'});
+              }
+            });
+        }
+    }).catch((err) =>{
+        res.status(400).json(err);
     });
   }
+
 }
 
 export default new Category();
