@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import jwt from 'jsonwebtoken';
 const User = mongoose.model('User');
 const router = express.Router();
 
@@ -32,19 +33,40 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-router.post('/signin', passport.authenticate('local'), (req, res) => {
-  res.status(200).json({username: req.user.username});
+router.post('/signin', (req,res) => {
+  User.findOne({
+    username: req.body.username
+  }, function(err, user) {
+    if (err) {
+        throw err;
+    }
+
+    if (!user) {
+      res.json({ success: false, message: 'Authentication failed. User not found.' });
+    } else if (user) {
+
+      // check if password matches
+      if (!user.authenticate(req.body.password)) {
+        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+      } else {
+
+        // if user is found and password is right
+        // create a token
+        var token = jwt.sign(user, 'superSecret', {
+          expiresIn: 60*60 // expires in 1 hour
+        });
+
+        // return the information including token as JSON
+        res.json({
+          success: true,
+          message: 'Enjoy your token!',
+          token: token
+        });
+      }
+    }
+
+  });
 });
 
-router.get('/secure', (req, res) => {
-  console.log(req.session);
-  console.log(req.user);
-  if (req.user) {
-    res.status(200).json({secure: true});
-  } else {
-    res.status(401).json({message: 'Not Authorized'})
-  }
-  console.log(req.user);
-});
 
 export default router;

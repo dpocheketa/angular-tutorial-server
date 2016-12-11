@@ -104,6 +104,7 @@ UserSchema.path('hashed_password').validate(function (hashed_password) {
  */
 
 UserSchema.pre('save', function (next) {
+    console.log('preSave: ', this);
   if (!this.isNew) {
     return next();
   }

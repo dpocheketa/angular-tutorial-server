@@ -2,6 +2,7 @@
 
 import express from 'express';
 import category from '../../controllers/category';
+import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
@@ -9,10 +10,10 @@ router.get('/', category.list);
 
 router.get('/:id', category.find);
 
-router.post('/', category.create);
+router.post('/', auth, category.create);
 
-router.put('/:id', category.update);
+router.put('/:id', auth, category.update);
 
-router.delete('/:id', category.remove);
+router.delete('/:id', auth, category.remove);
 
 export default router;
