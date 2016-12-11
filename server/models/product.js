@@ -3,7 +3,6 @@
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const MongoCategory = mongoose.model('Category');
 /**
  * Product Schema
  */
@@ -39,10 +38,6 @@ ProductSchema.path('categoryId').validate(function (categoryId) {
  * Pre-save hook
  */
 
-let categoryExist = (id) =>{
-    return MongoCategory.findById(id);
-};
-
 ProductSchema.pre('save', function (next) {
   if (!this.isNew) {
     return next();
@@ -50,10 +45,7 @@ ProductSchema.pre('save', function (next) {
   if (!validatePresenceOf(this.categoryId)) {
     next(new Error('Invalid categoryId'));
   } else {
-
-    categoryExist(this.categoryId).then(next).catch(function(){
-        next(new Error('Category not found!'));
-    });
+    next();
   }
 });
 

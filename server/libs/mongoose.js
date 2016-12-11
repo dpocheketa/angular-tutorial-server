@@ -3,8 +3,7 @@
 let mongoose = require('mongoose');
 let db = mongoose.connection;
 mongoose.Promise = global.Promise;
-// let mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost/test';
-let mongodbUri = 'mongodb://localhost/test';
+let mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost/test';
 
 mongoose.connect(mongodbUri);
 

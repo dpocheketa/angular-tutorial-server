@@ -36,8 +36,6 @@ let createUsers = ()=> {
         });
     });
 
-    console.log('createUsers');
-
     return Promise.all(requests);
 
 };
@@ -53,9 +51,7 @@ let createProducts = (products, categoryId) => {
             kcal: product.kcal,
             categoryId: mongoose.Types.ObjectId(categoryId)
         };
-
         return new Product(p).save((err, savedProduct) => {
-            console.log('product ' + savedProduct._id + ' Saved');
             if (err) {
                 console.log(err);
                 throw err;
@@ -69,7 +65,6 @@ let createProducts = (products, categoryId) => {
 let createCategory = (err, savedCategory, products) => {
     let categoryId = savedCategory._id;
 
-    console.log('Category ' + categoryId + ' Saved');
     if (err) {
         console.log(err);
         throw err;
